@@ -2,45 +2,97 @@ import React, { useState } from 'react';
 import { AtmosphereBackground } from './components/AtmosphereBackground';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { AboutSkills } from './components/AboutSkills';
+import { About } from './components/About';
+import { HowIBuild } from './components/HowIBuild';
+import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
+import { Experience } from './components/Experience';
+import { Education } from './components/Education';
+import { Certifications } from './components/Certifications';
+import { TechnicalJourney } from './components/TechnicalJourney';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
+import { CommandPalette } from './components/CommandPalette';
+import { CustomCursor } from './components/CustomCursor';
+import { useScrollReveal } from './hooks/useScrollReveal';
+import { usePerformanceMode } from './hooks/usePerformanceMode';
 
 export default function App() {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState<boolean>(false);
+  const [isCmdOpen, setIsCmdOpen] = useState<boolean>(false);
+  const { isLiteMode, toggleLiteMode } = usePerformanceMode();
+
+  // Initialize IntersectionObserver scroll reveals
+  useScrollReveal();
 
   return (
-    <div className="relative min-h-screen bg-[#071018] text-[#F5F7FA] font-sans selection:bg-[#FF6338]/30 selection:text-white">
-      {/* Premium Atmospheric Deep Navy & Subtle Orange Background */}
+    <div className="anim-page-enter relative min-h-screen bg-[#050607] text-[#F5F5F5] font-sans selection:bg-[#FF6B00]/30 selection:text-white overflow-x-hidden">
+      {/* Premium Desktop Custom Cursor */}
+      <CustomCursor />
+
+      {/* Dark Futuristic Liquid-Glass Atmosphere Canvas */}
       <AtmosphereBackground />
 
-      {/* Floating Centered Glass Navbar */}
-      <Navbar onOpenResume={() => setIsResumeModalOpen(true)} />
+      {/* Floating Centered Liquid-Glass Navbar */}
+      <Navbar
+        onOpenResume={() => setIsResumeModalOpen(true)}
+        onOpenCmd={() => setIsCmdOpen(true)}
+        isLiteMode={isLiteMode}
+        onToggleLiteMode={toggleLiteMode}
+      />
 
-      {/* Main Content Sections */}
+      {/* Main Page Sections */}
       <main className="relative z-10 flex flex-col">
-        {/* Hero Section */}
+        {/* 1. Hero Section */}
         <Hero />
 
-        {/* 01 About Me & 02 My Skills */}
-        <AboutSkills />
+        {/* 2. About Section */}
+        <section id="about" aria-label="About Raunak Kumar" className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 z-10">
+          <div className="w-full max-w-6xl mx-auto">
+            <About onOpenResume={() => setIsResumeModalOpen(true)} />
+          </div>
+        </section>
 
-        {/* 03 Selected Work */}
+        {/* 3. How I Build (Developer Philosophy) */}
+        <HowIBuild />
+
+        {/* 4. Technical Skills */}
+        <Skills />
+
+        {/* 5. Featured Projects */}
         <Projects />
 
-        {/* 04 Contact */}
+        {/* 6. Experience & Achievements */}
+        <Experience />
+
+        {/* 7. Education Timeline */}
+        <Education />
+
+        {/* 8. Verified Certifications Gallery */}
+        <Certifications />
+
+        {/* 9. Technical Growth Journey */}
+        <TechnicalJourney />
+
+        {/* 10. Contact Section */}
         <Contact />
       </main>
 
-      {/* Site Footer */}
+      {/* 11. Minimal Footer */}
       <Footer />
 
-      {/* Curriculum Vitae / Resume Modal */}
+      {/* 12. Print/PDF-ready Resume Modal */}
       <ResumeModal
         isOpen={isResumeModalOpen}
         onClose={() => setIsResumeModalOpen(false)}
+      />
+
+      {/* 13. Command Palette (Ctrl + K) */}
+      <CommandPalette
+        isOpen={isCmdOpen}
+        onClose={() => setIsCmdOpen(false)}
+        onOpenResume={() => setIsResumeModalOpen(true)}
       />
     </div>
   );

@@ -6,38 +6,38 @@ export const AtmosphereBackground: React.FC = () => {
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
-      {/* Base deep background */}
-      <div className="absolute inset-0 bg-[#071018]" />
+      {/* Base Deep Almost-Black Canvas (#050607) */}
+      <div className="absolute inset-0 bg-[#050607]" />
 
-      {/* Atmospheric Radial Glow - Soft Orange Top Right */}
+      {/* Priority 4: Subtle organic ambient glow */}
       <div
-        className="absolute -top-[12%] right-[5%] h-[550px] w-[550px] rounded-full blur-[140px] opacity-25"
+        className="ambient-reflection absolute inset-0 opacity-80"
         style={{
-          background: 'radial-gradient(circle, rgba(255,99,56,0.35) 0%, rgba(255,99,56,0) 70%)',
+          background:
+            'radial-gradient(ellipse 90% 70% at 50% -10%, #0D1013 0%, #080A0C 50%, #050607 100%)',
         }}
       />
 
-      {/* Atmospheric Radial Glow - Deep Navy / Muted Cyan Middle Left */}
+      {/* Priority 4: Background Orb Glow - Top Right */}
       <div
-        className="absolute top-[35%] -left-[10%] h-[600px] w-[600px] rounded-full blur-[160px] opacity-20"
+        className="background-orb absolute -top-[10%] right-[10%] h-[500px] w-[500px] rounded-full blur-[140px]"
         style={{
-          background: 'radial-gradient(circle, rgba(16,42,68,0.8) 0%, rgba(7,16,24,0) 75%)',
+          background:
+            'radial-gradient(circle, rgba(255, 107, 0, 0.35) 0%, rgba(255, 107, 0, 0) 70%)',
         }}
       />
 
-      {/* Atmospheric Glow - Warm Orange Accent Bottom Center */}
+      {/* Priority 4: Ambient Glow - Mid Left */}
       <div
-        className="absolute bottom-[5%] left-[30%] h-[500px] w-[500px] rounded-full blur-[150px] opacity-15"
+        className="ambient-glow absolute top-[40%] -left-[10%] h-[550px] w-[550px] rounded-full blur-[160px]"
         style={{
-          background: 'radial-gradient(circle, rgba(255,138,98,0.3) 0%, rgba(255,99,56,0) 70%)',
+          background:
+            'radial-gradient(circle, rgba(255, 107, 0, 0.2) 0%, rgba(13, 16, 19, 0) 70%)',
         }}
       />
 
-      {/* Subtle Noise / Grain Pattern */}
-      <div className="absolute inset-0 bg-noise opacity-30" />
-
-      {/* Vignette border fade */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#071018_90%)]" />
+      {/* Micro-grain texture */}
+      <div className="absolute inset-0 bg-noise opacity-20" />
     </div>
   );
 };

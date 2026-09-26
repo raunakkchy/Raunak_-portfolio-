@@ -2,24 +2,21 @@
 
 @layer base {
   :root {
-    --bg-primary: #071018;
-    --bg-secondary: #0B141D;
-    --glass-bg: rgba(255, 255, 255, 0.06);
-    --glass-hover: rgba(255, 255, 255, 0.10);
-    --glass-border: rgba(255, 255, 255, 0.13);
-    --glass-border-hover: rgba(255, 255, 255, 0.28);
-    --text-primary: #F5F7FA;
-    --text-secondary: #9AA8B5;
-    --text-muted: #687785;
-    --orange-primary: #FF6338;
-    --orange-secondary: #FF8A62;
+    --bg-deep: #050607;
+    --bg-surface: #080A0C;
+    --bg-elevated: #0D1013;
+    --orange-accent: #FF6B00;
+    --orange-glow: rgba(255, 107, 0, 0.2);
+    --text-primary: #F5F5F5;
+    --text-secondary: #A5A5A5;
+    --text-muted: #6F7378;
   }
 
   body {
-    background-color: var(--bg-primary);
+    background-color: var(--bg-deep);
     color: var(--text-primary);
     font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -36,73 +33,453 @@
   font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.font-handwriting {
-  font-family: 'Caveat', cursive;
+/* =========================================================================
+   Liquid Glass & Water-Drop Visual Language
+   ========================================================================= */
+
+.liquid-glass {
+  background: radial-gradient(
+    130% 130% at 18% 12%,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(13, 16, 19, 0.78) 55%,
+    rgba(8, 10, 12, 0.92) 100%
+  );
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 1px 1px 1px rgba(255, 255, 255, 0.22),
+    inset -1px -1px 2px rgba(255, 107, 0, 0.12),
+    0 24px 60px rgba(0, 0, 0, 0.65);
+  position: relative;
 }
 
-/* Glassmorphism Classes */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 24px 70px rgba(0, 0, 0, 0.20);
+/* Organic Shapes */
+.droplet-shape-hero {
+  border-radius: 46% 54% 62% 38% / 44% 48% 52% 56%;
 }
 
-.glass-panel-hover {
-  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+.droplet-shape-card-1 {
+  border-radius: 34px 26px 36px 30px;
 }
 
-.glass-panel-hover:hover {
-  background: rgba(255, 255, 255, 0.10);
-  border-color: rgba(255, 255, 255, 0.24);
+.droplet-shape-card-2 {
+  border-radius: 28px 36px 28px 38px;
+}
+
+.droplet-shape-card-3 {
+  border-radius: 36px 28px 36px 28px;
+}
+
+.droplet-shape-mini {
+  border-radius: 54% 46% 60% 40% / 48% 52% 48% 52%;
+}
+
+.droplet-shape-horizontal {
+  border-radius: 50px 36px 48px 38px;
+}
+
+.water-droplet {
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.08) 35%, rgba(13, 16, 19, 0.8) 75%, rgba(8, 10, 12, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+    inset -1px -1px 3px rgba(255, 107, 0, 0.3),
+    0 10px 25px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.liquid-pill {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.12), inset -1px -1px 1px rgba(255, 107, 0, 0.08);
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), background-color 250ms, border-color 250ms, box-shadow 250ms;
+}
+
+.liquid-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 107, 0, 0.4);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.2), inset -1px -1px 2px rgba(255, 107, 0, 0.2);
+}
+
+/* =========================================================================
+   1. HERO ENTRANCE STAGGERED ANIMATION SEQUENCE
+   ========================================================================= */
+
+@keyframes heroNavbarEnter {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroGreetingEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroNameBlurEnter {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes heroFadeUpEnter {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroLiquidShapeEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+.anim-nav {
+  animation: heroNavbarEnter 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-enter-greeting {
+  animation: heroGreetingEnter 500ms cubic-bezier(0.16, 1, 0.3, 1) 150ms forwards;
+  opacity: 0;
+}
+
+.hero-enter-name {
+  animation: heroNameBlurEnter 700ms cubic-bezier(0.16, 1, 0.3, 1) 280ms forwards;
+  opacity: 0;
+}
+
+.hero-enter-subtitle {
+  animation: heroFadeUpEnter 550ms cubic-bezier(0.16, 1, 0.3, 1) 450ms forwards;
+  opacity: 0;
+}
+
+.hero-enter-description {
+  animation: heroFadeUpEnter 550ms cubic-bezier(0.16, 1, 0.3, 1) 580ms forwards;
+  opacity: 0;
+}
+
+.hero-enter-buttons {
+  animation: heroFadeUpEnter 550ms cubic-bezier(0.16, 1, 0.3, 1) 700ms forwards;
+  opacity: 0;
+}
+
+.hero-enter-socials {
+  animation: heroFadeUpEnter 550ms cubic-bezier(0.16, 1, 0.3, 1) 820ms forwards;
+  opacity: 0;
+}
+
+.hero-enter-shape {
+  animation: heroLiquidShapeEnter 900ms cubic-bezier(0.16, 1, 0.3, 1) 920ms forwards;
+  opacity: 0;
+}
+
+/* =========================================================================
+   10. BUTTON MICRO-INTERACTIONS
+   ========================================================================= */
+
+.anim-primary-button {
+  position: relative;
+  overflow: hidden;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), background-color 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+  will-change: transform;
+}
+
+.anim-primary-button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.anim-primary-button:hover::after {
+  transform: translateX(100%);
+}
+
+.anim-primary-button:hover {
+  transform: translateY(-2px);
+}
+
+.anim-primary-button:active {
+  transform: scale(0.97);
+}
+
+.anim-menu {
+  animation: menuSlide 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes menuSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================================================
+   2 & 3. LIQUID HERO & FLOATING DROPLETS
+   ========================================================================= */
+
+.liquid-hero {
+  animation: liquidHeroFloat 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes liquidHeroFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+.liquid-reflection {
+  animation: liquidReflectPulse 7s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes liquidReflectPulse {
+  0%, 100% {
+    opacity: 0.22;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.38;
+    transform: scale(1.04);
+  }
+}
+
+.liquid-float {
+  animation: liquidFloatSubtle 6.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes liquidFloatSubtle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(-1deg);
+  }
+}
+
+.liquid-droplet {
+  animation: liquidDropletPulse 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes liquidDropletPulse {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.02);
+  }
+}
+
+/* =========================================================================
+   5 & 6. PROJECT CARD & PREVIEW INTERACTION
+   ========================================================================= */
+
+.project-card {
+  transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 350ms ease,
+              box-shadow 350ms ease,
+              background 350ms ease;
+  will-change: transform;
+}
+
+.project-card:hover {
   transform: translateY(-6px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 30px 80px rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 107, 0, 0.38);
+  box-shadow:
+    inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.32),
+    inset -1px -1px 4px rgba(255, 107, 0, 0.24),
+    0 28px 70px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(255, 107, 0, 0.12);
 }
 
-.glass-pill {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+.project-card:hover .project-arrow {
+  transform: translateX(4px);
+  color: #FF852C;
 }
 
-.glass-pill:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 99, 56, 0.3);
+.project-reflection {
+  transition: opacity 350ms ease, transform 350ms ease;
+  opacity: 0.2;
 }
 
-/* Floating Animations */
-@keyframes subtleFloat {
-  0%, 100% {
-    transform: translateY(0px) rotate(var(--rot, 0deg));
-  }
-  50% {
-    transform: translateY(-8px) rotate(var(--rot, 0deg));
-  }
+.project-card:hover .project-reflection {
+  opacity: 0.45;
+  transform: scale(1.06);
 }
 
-@keyframes subtleFloatSlow {
-  0%, 100% {
-    transform: translateY(0px) rotate(var(--rot, 0deg));
-  }
-  50% {
-    transform: translateY(-12px) rotate(var(--rot, 0deg));
-  }
+.project-icon {
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.animate-float-slow {
-  animation: subtleFloatSlow 6s ease-in-out infinite;
+.project-card:hover .project-icon {
+  transform: scale(1.06);
 }
 
-.animate-float-delay {
-  animation: subtleFloat 5s ease-in-out 1.5s infinite;
+/* =========================================================================
+   7 & 8. SCROLL REVEAL & SKILL ICON ANIMATION
+   ========================================================================= */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  filter: blur(4px);
+  transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 650ms cubic-bezier(0.16, 1, 0.3, 1),
+              filter 650ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
 }
 
-/* Grain texture overlay */
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.reveal-up {
+  transform: translateY(32px);
+}
+
+.reveal-up.active {
+  transform: translateY(0);
+}
+
+.reveal-left {
+  transform: translateX(-28px);
+}
+
+.reveal-left.active {
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  filter: blur(4px);
+}
+
+.reveal-scale.active {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+}
+
+.stagger-child {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 400ms cubic-bezier(0.16, 1, 0.3, 1), transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stagger-child.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Texture overlay */
 .bg-noise {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
-  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 0);
+  background-size: 28px 28px;
 }
 
+/* =========================================================================
+   PERFORMANCE FALLBACK & REDUCED MOTION SUPPORT
+   ========================================================================= */
+
+.performance-lite .decorative-droplet {
+  display: none !important;
+  animation: none !important;
+}
+
+.performance-lite .ambient-glow,
+.performance-lite .background-orb,
+.performance-lite .ambient-reflection {
+  animation: none !important;
+  opacity: 0.1 !important;
+}
+
+.performance-lite .liquid-hero,
+.performance-lite .liquid-reflection,
+.performance-lite .liquid-float,
+.performance-lite .liquid-droplet {
+  animation: none !important;
+  transform: none !important;
+}
+
+.performance-lite .liquid-glass,
+.performance-lite .water-droplet,
+.performance-lite .liquid-pill {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .liquid-hero,
+  .liquid-reflection,
+  .liquid-float,
+  .liquid-droplet,
+  .decorative-droplet,
+  .ambient-glow,
+  .background-orb,
+  .ambient-reflection {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .reveal,
+  .reveal-up,
+  .reveal-left,
+  .reveal-scale,
+  .hero-enter-greeting,
+  .hero-enter-name,
+  .hero-enter-subtitle,
+  .hero-enter-description,
+  .hero-enter-buttons,
+  .hero-enter-socials,
+  .hero-enter-shape {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+    transition: opacity 200ms ease !important;
+  }
+}

@@ -1,206 +1,134 @@
 import React, { useState } from 'react';
-import { ArrowRight, ExternalLink, Sparkles, CheckCircle2 } from 'lucide-react';
-import { portfolioData, ProjectItem } from '../data/portfolio';
 import {
-  PlacementOSPreview,
-  SimpleHisaabPreview,
-  NSITChatbotPreview,
-} from './ProjectPreviews';
+  ArrowRight,
+  ExternalLink,
+  Briefcase,
+  MessageSquare,
+} from 'lucide-react';
+import { portfolioData, ProjectItem } from '../data/portfolio';
 import { ProjectModal } from './ProjectModal';
 
 export const Projects: React.FC = () => {
-  const { projects, projectsIntro, projectsReflection } = portfolioData;
+  const { projects } = portfolioData;
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
-
-  const renderPreview = (id: string) => {
-    switch (id) {
-      case 'placement-os':
-        return <PlacementOSPreview />;
-      case 'simple-hisaab':
-        return <SimpleHisaabPreview />;
-      case 'nsit-ai-chatbot':
-        return <NSITChatbotPreview />;
-      default:
-        return null;
-    }
-  };
 
   return (
     <section
       id="projects"
-      aria-label="Selected Projects"
-      className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 z-10"
+      aria-label="My Projects"
+      className="reveal reveal-up relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 z-10"
     >
       <div className="w-full max-w-6xl mx-auto">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 border-b border-white/[0.08] pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
           <div>
-            <div className="flex items-center gap-3 mb-3">
-              <span className="font-mono text-xs font-semibold tracking-wider text-[#FF6338]">
-                03
-              </span>
-              <span className="w-8 h-[1px] bg-[#FF6338]/40" />
-              <span className="text-xs font-mono uppercase tracking-widest text-[#687785]">
-                SELECTED WORK
-              </span>
-            </div>
+            {/* Orange horizontal line accent */}
+            <div className="w-8 h-[2.5px] bg-[#FF6B00] rounded-full mb-3 shadow-[0_0_10px_rgba(255,107,0,0.5)]" />
 
-            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F5F7FA]">
-              <span>Projects I&apos;m</span>{' '}
-              <span className="text-[#FF6338]">building</span>
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F5F5F5]">
+              My Projects
             </h2>
+
+            <p className="font-body text-[#A5A5A5] text-sm sm:text-base mt-1">
+              Real problems. Practical solutions.
+            </p>
           </div>
 
-          <div className="font-mono text-xs sm:text-sm text-[#9AA8B5] tracking-wide">
-            <span className="text-[#FF6338] font-bold">03</span> projects
-          </div>
+          <a
+            href="#projects"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#FF6B00] hover:text-[#FF852C] transition-colors"
+          >
+            <span>View All Projects</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </a>
         </div>
 
-        {/* Philosophy / Intent Introduction */}
-        <p className="font-body text-[#9AA8B5] text-base sm:text-lg leading-relaxed max-w-3xl mb-12">
-          {projectsIntro}
-        </p>
-
-        {/* Responsive Grid: 3 cards on desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
+        {/* 3 Projects Cards in a Row (Desktop) / Stacked (Mobile) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {projects.map((project) => (
             <div
               key={project.id}
-              className="group glass-panel rounded-2xl p-5 relative flex flex-col justify-between border border-white/[0.12] hover:border-white/30 transition-all duration-250 ease-out hover:-translate-y-1.5 shadow-[0_16px_40px_rgba(0,0,0,0.25)] hover:shadow-[0_24px_50px_rgba(0,0,0,0.4)] overflow-hidden"
-              style={{
-                transition: 'all 250ms ease',
-              }}
+              className={`project-card liquid-glass ${project.shapeClass || 'droplet-shape-card-1'} p-7 sm:p-8 flex flex-col justify-between cursor-pointer relative overflow-hidden`}
+              onClick={() => setSelectedProject(project)}
             >
-              {/* Giant Subtle Background Numbering (01, 02, 03) */}
+              {/* Project glass reflection pass */}
               <div
                 aria-hidden="true"
-                className="absolute top-2 right-4 font-heading text-8xl font-black text-white/[0.03] select-none pointer-events-none group-hover:text-white/[0.06] transition-colors"
-              >
-                {project.number}
-              </div>
+                className="project-reflection absolute top-2 left-6 w-24 h-8 rounded-full bg-white/10 blur-md pointer-events-none"
+              />
 
-              {/* Top Meta: Number + Category */}
+              {/* Bottom orange rim light reflection */}
+              <div
+                aria-hidden="true"
+                className="project-reflection absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-[#FF6B00]/20 blur-2xl pointer-events-none"
+              />
+
               <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-[#FF6338]">
+                {/* Header row: project-icon badge */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="project-icon flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#FF6B00]/15 border border-[#FF6B00]/30 text-[#FF6B00] shadow-[0_0_15px_rgba(255,107,0,0.2)]">
+                    {project.id === 'placement-os' && <Briefcase className="w-4 h-4" />}
+                    {project.id === 'simple-hisaab' && (
+                      <span className="font-heading font-bold text-sm leading-none">₹</span>
+                    )}
+                    {project.id === 'nsit-ai-chatbot' && <MessageSquare className="w-4 h-4" />}
+                    <span className="font-mono text-xs font-bold tracking-tight text-[#FF6B00]">
                       {project.number}
                     </span>
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#9AA8B5] truncate">
-                      {project.category}
-                    </span>
                   </div>
-
-                  {/* Arrow Action Indicator */}
-                  <button
-                    type="button"
-                    onClick={() => setSelectedProject(project)}
-                    aria-label={`Inspect ${project.title}`}
-                    className="w-7 h-7 rounded-full flex items-center justify-center bg-white/[0.05] group-hover:bg-[#FF6338] border border-white/10 group-hover:border-[#FF6338] text-[#9AA8B5] group-hover:text-white transition-all duration-200"
-                  >
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-200" />
-                  </button>
                 </div>
 
-                {/* Project Title & Tagline */}
-                <h3
-                  onClick={() => setSelectedProject(project)}
-                  className="font-heading text-xl font-bold text-[#F5F7FA] group-hover:text-white transition-colors cursor-pointer"
-                >
+                {/* Title & Subtitle */}
+                <h3 className="font-heading text-2xl font-bold text-[#F5F5F5] transition-colors mb-1">
                   {project.title}
                 </h3>
-                <div className="text-xs font-medium text-[#FF6338] mb-2.5">
-                  {project.tagline}
+
+                <div className="text-xs font-medium text-[#A5A5A5] mb-4 leading-snug">
+                  {project.subtitle}
                 </div>
 
-                {/* Project Description */}
-                <p className="font-body text-[#9AA8B5] text-xs sm:text-sm leading-relaxed mb-4 line-clamp-3">
+                {/* Description */}
+                <p className="font-body text-[#A5A5A5] text-xs sm:text-sm leading-relaxed mb-6 line-clamp-3">
                   {project.description}
                 </p>
               </div>
 
-              {/* Custom Dark Glass Project Preview */}
-              <div
-                onClick={() => setSelectedProject(project)}
-                className="my-1 cursor-pointer"
-              >
-                {renderPreview(project.id)}
-              </div>
-
-              {/* Bottom Actions & Tech Pills */}
-              <div className="pt-4 mt-3 border-t border-white/[0.06] space-y-3">
+              {/* Bottom: Tech Pills & View Project Button */}
+              <div className="pt-4 border-t border-white/10 space-y-4 relative z-10">
+                {/* Technology Pills */}
                 <div className="flex flex-wrap gap-1.5">
-                  {project.technologies.slice(0, 4).map((tech) => (
+                  {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="px-2 py-0.5 rounded text-[10px] font-mono text-[#9AA8B5] bg-white/[0.04] border border-white/[0.08]"
+                      className="px-3 py-1 rounded-full text-[11px] font-mono text-[#F5F5F5] bg-white/[0.06] border border-white/10"
                     >
                       {tech}
                     </span>
                   ))}
-                  {project.technologies.length > 4 && (
-                    <span className="px-1.5 py-0.5 rounded text-[10px] font-mono text-[#687785]">
-                      +{project.technologies.length - 4}
-                    </span>
-                  )}
                 </div>
 
-                <div className="flex items-center justify-between gap-2 pt-1">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedProject(project)}
-                    className="text-xs font-mono text-[#9AA8B5] hover:text-[#F5F7FA] transition-colors"
-                  >
-                    Details & Features →
-                  </button>
+                {/* View Project Button */}
+                <div className="flex items-center justify-between pt-1">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#FF6B00] transition-colors">
+                    <span>View Project</span>
+                    <ArrowRight className="project-arrow w-3.5 h-3.5 transition-transform duration-200" />
+                  </span>
 
                   <a
                     href={project.liveDemoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-white bg-[#FF6338] hover:bg-[#FF8A62] shadow-sm transition-all transform hover:-translate-y-0.5"
+                    onClick={(e) => e.stopPropagation()}
+                    className="p-1.5 rounded-full liquid-pill hover:bg-[#FF6B00] hover:text-white text-[#A5A5A5] transition-all"
+                    title="Open Live Demo"
                   >
-                    <span>Live Demo</span>
-                    <ExternalLink className="w-3 h-3" />
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>
               </div>
             </div>
           ))}
-        </div>
-
-        {/* What These Projects Say About Me (Editorial Reflection Card) */}
-        <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/[0.12] bg-white/[0.04]">
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#FF6338] mb-3 font-semibold">
-            <Sparkles className="w-4 h-4" />
-            <span>Developer Reflection</span>
-          </div>
-
-          <h3 className="font-heading text-xl sm:text-2xl font-bold text-[#F5F7FA] mb-4">
-            {projectsReflection.heading}
-          </h3>
-
-          <p className="font-body text-[#9AA8B5] text-sm sm:text-base leading-relaxed mb-6">
-            These projects represent different parts of my development journey:
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            {projectsReflection.points.map((pt) => (
-              <div key={pt.project} className="bg-white/[0.03] p-4 rounded-xl border border-white/[0.06]">
-                <div className="font-heading font-bold text-sm text-[#F5F7FA] mb-1 text-[#FF8A62]">
-                  {pt.project}
-                </div>
-                <div className="text-xs text-[#9AA8B5] leading-relaxed">
-                  {pt.takeaway}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="pt-4 border-t border-white/[0.08] text-xs sm:text-sm font-medium text-[#F5F7FA] italic">
-            &ldquo;{projectsReflection.closing}&rdquo;
-          </div>
         </div>
 
       </div>
