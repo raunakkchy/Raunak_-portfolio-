@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { AtmosphereBackground } from './components/AtmosphereBackground';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -12,11 +12,17 @@ import { Certifications } from './components/Certifications';
 import { TechnicalJourney } from './components/TechnicalJourney';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
-import { ResumeModal } from './components/ResumeModal';
-import { CommandPalette } from './components/CommandPalette';
 import { CustomCursor } from './components/CustomCursor';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { usePerformanceMode } from './hooks/usePerformanceMode';
+
+// Code-split modals so they only load when requested or opened
+const ResumeModal = lazy(() =>
+  import('./components/ResumeModal').then((m) => ({ default: m.ResumeModal }))
+);
+const CommandPalette = lazy(() =>
+  import('./components/CommandPalette').then((m) => ({ default: m.CommandPalette }))
+);
 
 export default function App() {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState<boolean>(false);
@@ -82,18 +88,26 @@ export default function App() {
       {/* 11. Minimal Footer */}
       <Footer />
 
-      {/* 12. Print/PDF-ready Resume Modal */}
-      <ResumeModal
-        isOpen={isResumeModalOpen}
-        onClose={() => setIsResumeModalOpen(false)}
-      />
+      {/* 12. Lazy-loaded Print/PDF-ready Resume Modal */}
+      {isResumeModalOpen && (
+        <Suspense fallback={null}>
+          <ResumeModal
+            isOpen={isResumeModalOpen}
+            onClose={() => setIsResumeModalOpen(false)}
+          />
+        </Suspense>
+      )}
 
-      {/* 13. Command Palette (Ctrl + K) */}
-      <CommandPalette
-        isOpen={isCmdOpen}
-        onClose={() => setIsCmdOpen(false)}
-        onOpenResume={() => setIsResumeModalOpen(true)}
-      />
+      {/* 13. Lazy-loaded Command Palette (Ctrl + K) */}
+      {isCmdOpen && (
+        <Suspense fallback={null}>
+          <CommandPalette
+            isOpen={isCmdOpen}
+            onClose={() => setIsCmdOpen(false)}
+            onOpenResume={() => setIsResumeModalOpen(true)}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }

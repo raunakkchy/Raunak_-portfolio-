@@ -101,6 +101,7 @@ export const Contact: React.FC = () => {
                     onClick={handleCopyEmail}
                     className="p-1.5 rounded-full liquid-pill text-[#A5A5A5] hover:text-white transition-colors"
                     title="Copy Email"
+                    aria-label="Copy email address"
                   >
                     {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                   </button>
@@ -113,7 +114,7 @@ export const Contact: React.FC = () => {
                   href={portfolioData.profile.socials.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label="LinkedIn"
+                  aria-label="LinkedIn Profile"
                   className="p-2 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
                 >
                   <LinkedinIcon className="w-4 h-4" />
@@ -123,7 +124,7 @@ export const Contact: React.FC = () => {
                   href={portfolioData.profile.socials.github}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label="GitHub"
+                  aria-label="GitHub Profile"
                   className="p-2 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
                 >
                   <GithubIcon className="w-4 h-4" />

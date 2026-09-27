@@ -4,7 +4,7 @@ export const AtmosphereBackground: React.FC = () => {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden contain-strict"
     >
       {/* Base Deep Almost-Black Canvas (#050607) */}
       <div className="absolute inset-0 bg-[#050607]" />
@@ -20,7 +20,7 @@ export const AtmosphereBackground: React.FC = () => {
 
       {/* Priority 4: Background Orb Glow - Top Right */}
       <div
-        className="background-orb absolute -top-[10%] right-[10%] h-[500px] w-[500px] rounded-full blur-[140px]"
+        className="background-orb absolute -top-[10%] right-[10%] h-[500px] w-[500px] rounded-full blur-[140px] translate-z-0"
         style={{
           background:
             'radial-gradient(circle, rgba(255, 107, 0, 0.35) 0%, rgba(255, 107, 0, 0) 70%)',
@@ -29,7 +29,7 @@ export const AtmosphereBackground: React.FC = () => {
 
       {/* Priority 4: Ambient Glow - Mid Left */}
       <div
-        className="ambient-glow absolute top-[40%] -left-[10%] h-[550px] w-[550px] rounded-full blur-[160px]"
+        className="ambient-glow absolute top-[40%] -left-[10%] h-[550px] w-[550px] rounded-full blur-[160px] translate-z-0"
         style={{
           background:
             'radial-gradient(circle, rgba(255, 107, 0, 0.2) 0%, rgba(13, 16, 19, 0) 70%)',

@@ -12,11 +12,35 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://cdn.phototourl.com/member/2026-09-26-03c636ff-811c-41ac-9cff-baf0618d7746.png" />
     <meta name="theme-color" content="#050607" />
-    
-    <!-- Google Fonts: Space Grotesk, DM Sans -->
+
+    <!-- LCP Image Preload for Mobile Performance -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://cdn.phototourl.com/member/2026-09-26-03c636ff-811c-41ac-9cff-baf0618d7746.png"
+      fetchpriority="high"
+    />
+
+    <!-- Google Fonts Preconnect & Async Load: Space Grotesk, DM Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -47,4 +71,3 @@
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

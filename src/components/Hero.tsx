@@ -78,7 +78,7 @@ export const Hero: React.FC = () => {
             </p>
 
             {/* Personal Statement Badge */}
-            <div className="hero-enter-description inline-block font-mono text-xs text-[#6F7378] uppercase tracking-wider mb-8 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10">
+            <div className="hero-enter-description inline-block font-mono text-xs text-[#8A8E94] uppercase tracking-wider mb-8 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10">
               {profile.personalStatement}
             </div>
 
@@ -190,10 +190,14 @@ export const Hero: React.FC = () => {
                 {/* Inner Mask with Profile Photo */}
                 <div className="relative w-full h-full droplet-shape-hero overflow-hidden bg-gradient-to-b from-[#0D1013] to-[#050607]">
                   
-                  {/* Photo with cinematic dark grading */}
+                  {/* Photo with explicit dimensions and high priority fetch for instant LCP */}
                   <img
                     src={profile.photoUrl}
                     alt="Raunak Kumar - Full-Stack Developer"
+                    width={380}
+                    height={480}
+                    fetchPriority="high"
+                    decoding="sync"
                     className="w-full h-full object-cover object-center filter contrast-[1.08] brightness-[0.92] select-none"
                   />
 
