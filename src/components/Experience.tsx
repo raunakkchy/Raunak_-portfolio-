@@ -1,9 +1,11 @@
 import React from 'react';
-import { portfolioData } from '../data/portfolio';
+import { useCMS } from '../context/CMSContext';
 import { Award, Briefcase, CheckCircle2, Building2 } from 'lucide-react';
 
 export const Experience: React.FC = () => {
-  const { experience, achievements } = portfolioData;
+  const { data } = useCMS();
+  const experience = data.experience.filter((e) => e.published !== false);
+  const achievements = data.achievements.filter((a) => a.published !== false);
 
   return (
     <section
@@ -33,8 +35,8 @@ export const Experience: React.FC = () => {
 
             {experience.map((exp) => (
               <div
-                key={exp.organization}
-                className="liquid-glass droplet-shape-card-1 p-6 sm:p-8 border border-white/15 h-full flex flex-col justify-between"
+                key={exp.id || exp.organization}
+                className="liquid-glass droplet-shape-card-1 p-6 sm:p-8 border border-white/15 h-full flex flex-col justify-between mb-4 last:mb-0"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
@@ -67,32 +69,41 @@ export const Experience: React.FC = () => {
           </div>
 
           {/* Factual Achievements */}
-          <div className="lg:col-span-6 flex flex-col">
-            <h3 className="font-heading text-xl font-bold text-[#F5F5F5] mb-4 flex items-center gap-2">
-              <Award className="w-5 h-5 text-[#FF6B00]" />
-              <span>Factual Achievements</span>
-            </h3>
+          {achievements.length > 0 && (
+            <div className="lg:col-span-6 flex flex-col">
+              <h3 className="font-heading text-xl font-bold text-[#F5F5F5] mb-4 flex items-center gap-2">
+                <Award className="w-5 h-5 text-[#FF6B00]" />
+                <span>Factual Achievements</span>
+              </h3>
 
-            <div className="liquid-glass droplet-shape-card-2 p-6 sm:p-8 border border-white/15 h-full flex flex-col justify-between">
-              <div className="space-y-4">
-                {achievements.map((ach, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-start gap-3 p-3 rounded-2xl bg-white/[0.03] border border-white/[0.06]"
-                  >
-                    <CheckCircle2 className="w-4 h-4 text-[#FF6B00] shrink-0 mt-0.5" />
-                    <span className="font-body text-xs sm:text-sm text-[#F5F5F5] leading-relaxed">
-                      {ach}
-                    </span>
-                  </div>
-                ))}
-              </div>
+              <div className="liquid-glass droplet-shape-card-2 p-6 sm:p-8 border border-white/15 h-full flex flex-col justify-between">
+                <div className="space-y-4">
+                  {achievements.map((ach) => (
+                    <div
+                      key={ach.id || ach.description}
+                      className="flex items-start gap-3 p-3 rounded-2xl bg-white/[0.03] border border-white/[0.06]"
+                    >
+                      <CheckCircle2 className="w-4 h-4 text-[#FF6B00] shrink-0 mt-0.5" />
+                      <div className="flex flex-col">
+                        {ach.title && ach.title !== 'Achievement' && (
+                          <span className="font-heading text-xs font-bold text-white mb-0.5">
+                            {ach.title}
+                          </span>
+                        )}
+                        <span className="font-body text-xs sm:text-sm text-[#F5F5F5] leading-relaxed">
+                          {ach.description}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
-              <div className="mt-6 pt-4 border-t border-white/10 text-xs font-mono text-[#6F7378]">
-                <span>Grounded in actual performance and completed projects</span>
+                <div className="mt-6 pt-4 border-t border-white/10 text-xs font-mono text-[#6F7378]">
+                  <span>Grounded in actual performance and completed projects</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>

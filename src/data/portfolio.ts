@@ -225,7 +225,7 @@ export const portfolioData = {
 
   achievements: [
     "Maintained an academic CGPA of 8.5 / 10 in Diploma Computer Science Engineering.",
-    "Built and deployed three full-stack and AI-powered web applications from scratch.",
+    "Built and deployed full-stack and AI-powered web applications from scratch.",
     "Completed technical certification programs from IIT Bombay (Spoken Tutorial) and Cisco Networking Academy.",
     "Completed a practical Web Development internship at NIELIT Patna.",
   ],
@@ -284,8 +284,41 @@ export const portfolioData = {
         "Handled architecture, frontend, backend, database, Gemini AI integration, UI/UX, and cloud deployment.",
     },
     {
-      id: "simple-hisaab",
+      id: "college-complaint-portal",
       number: "02",
+      title: "College Complaint Portal",
+      subtitle: "Online Complaint Management System",
+      category: "Full Stack Portal",
+      description:
+        "A full-stack web application for submitting, managing, and tracking college complaints digitally for students and administrators.",
+      technologies: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
+      liveDemoUrl: "https://github.com/raunakkchy",
+      githubUrl: "https://github.com/raunakkchy",
+      shapeClass: "droplet-shape-card-2",
+      whatItDoes:
+        "Digital complaint submission and tracking system for students with real-time status updates, admin resolution portal, category tags, and photo attachment previews.",
+      mainFeatures: [
+        "Student Complaint Submission",
+        "Category & Priority Tagging",
+        "Photo Upload & Attachment Preview",
+        "Admin Portal & Resolution Workflow",
+        "Real-Time Status Tracking",
+        "Responsive Student Dashboard",
+      ],
+      problem: "Paper-based complaint forms in college campuses lead to delayed resolutions, misplaced complaints, and lack of tracking transparency.",
+      approach: "Built a digitized complaint lifecycle from student submission through admin review and resolution status updating.",
+      developmentChallenges: "Managing image attachment previews and role-based views for students vs administrators.",
+      solution: "Implemented secure backend REST endpoints and responsive status badges.",
+      whatILearned: "Gained full-stack experience in RESTful architecture, complaint management workflows, and MongoDB queries.",
+      myContribution: [
+        "Developed full-stack complaint portal with student reporting, admin review dashboard, and status updates.",
+      ],
+      contributionSummary:
+        "Handled frontend UI, Express API routes, status workflows, and database integration.",
+    },
+    {
+      id: "simple-hisaab",
+      number: "03",
       title: "Simple Hisaab",
       subtitle: "Digital Lending & Interest Management",
       category: "Finance Utility",
@@ -294,7 +327,7 @@ export const portfolioData = {
       technologies: ["React", "Node.js", "Express.js", "MongoDB"],
       liveDemoUrl: "https://digital-hisaab.vercel.app/",
       githubUrl: "https://github.com/raunakkchy",
-      shapeClass: "droplet-shape-card-2",
+      shapeClass: "droplet-shape-card-3",
       whatItDoes:
         "Replaces messy manual paper diaries with a secure digital ledger. Users manage debtors, track principal amounts, automate monthly interest calculations, monitor due dates and payment statuses, and export clean reports.",
       mainFeatures: [
@@ -321,7 +354,7 @@ export const portfolioData = {
     },
     {
       id: "nsit-ai-chatbot",
-      number: "03",
+      number: "04",
       title: "NSIT AI Chatbot",
       subtitle: "AI Assistant for College Students",
       category: "AI College Assistant",
@@ -330,7 +363,7 @@ export const portfolioData = {
       technologies: ["HTML", "CSS", "JavaScript", "Tailwind CSS", "Gemini API"],
       liveDemoUrl: "https://nsit-ai-chatbot.vercel.app/",
       githubUrl: "https://github.com/raunakkchy",
-      shapeClass: "droplet-shape-card-3",
+      shapeClass: "droplet-shape-card-1",
       whatItDoes:
         "Allows college students to ask everyday questions in plain language regarding exam dates, syllabus, practical schedules, and department notices without hunting through clunky portals.",
       mainFeatures: [

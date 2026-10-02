@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { X, Printer, Copy, Check, Mail, MapPin, GraduationCap, Code, ExternalLink, Phone } from 'lucide-react';
-import { portfolioData } from '../data/portfolio';
+import { X, Printer, Copy, Check, Mail, MapPin, GraduationCap, Code, ExternalLink, Phone, Download } from 'lucide-react';
+import { useCMS } from '../context/CMSContext';
+import { useScrollLock } from '../hooks/useScrollLock';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -9,18 +10,19 @@ interface ResumeModalProps {
 
 export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => {
   const [copied, setCopied] = useState<boolean>(false);
-  const { profile, skillCategories, projects, educationTimeline, experience, certifications } = portfolioData;
+  const { data } = useCMS();
+  const { profile, skillCategories, projects, educationTimeline, experience, certifications } = data;
+
+  useScrollLock(isOpen);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => {
-      document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);
@@ -28,7 +30,15 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
   if (!isOpen) return null;
 
   const handlePrint = () => {
-    window.print();
+    if (profile.resumeUrl) {
+      const link = document.createElement('a');
+      link.href = profile.resumeUrl;
+      link.download = profile.resumeFileName || 'Raunak_Kumar_Resume.pdf';
+      link.target = '_blank';
+      link.click();
+    } else {
+      window.print();
+    }
   };
 
   const handleCopyText = () => {
@@ -43,24 +53,14 @@ ${profile.institute}
 ${profile.semesterStatus} | CGPA: ${profile.cgpa}
 
 INTERNSHIP:
-${experience[0]?.role} - ${experience[0]?.organization} (${experience[0]?.status})
-${experience[0]?.description}
+${experience[0]?.role || ''} - ${experience[0]?.organization || ''} (${experience[0]?.status || ''})
+${experience[0]?.description || ''}
 
 TECHNICAL SKILLS:
 ${skillCategories.map((c) => `${c.title}: ${c.items.map((i) => i.name).join(', ')}`).join('\n')}
 
 PROJECTS:
-1. ${projects[0]?.title} — ${projects[0]?.subtitle}
-Stack: ${projects[0]?.technologies.join(', ')}
-Live Demo: ${projects[0]?.liveDemoUrl}
-
-2. ${projects[1]?.title} — ${projects[1]?.subtitle}
-Stack: ${projects[1]?.technologies.join(', ')}
-Live Demo: ${projects[1]?.liveDemoUrl}
-
-3. ${projects[2]?.title} — ${projects[2]?.subtitle}
-Stack: ${projects[2]?.technologies.join(', ')}
-Live Demo: ${projects[2]?.liveDemoUrl}
+${projects.slice(0, 3).map((p, idx) => `${idx + 1}. ${p.title} — ${p.subtitle}\nStack: ${p.technologies.join(', ')}\nLive Demo: ${p.liveDemoUrl}`).join('\n\n')}
     `.trim();
 
     navigator.clipboard.writeText(text);
@@ -120,10 +120,10 @@ Live Demo: ${projects[2]?.liveDemoUrl}
             <button
               type="button"
               onClick={handlePrint}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-white bg-[#FF6B00] hover:bg-[#FF852C] transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium text-white bg-[#FF6B00] hover:bg-[#FF852C] transition-colors"
             >
-              <Printer className="w-3.5 h-3.5" />
-              <span>Print / PDF</span>
+              {profile.resumeUrl ? <Download className="w-3.5 h-3.5" /> : <Printer className="w-3.5 h-3.5" />}
+              <span>{profile.resumeUrl ? 'Download Resume File' : 'Print / PDF'}</span>
             </button>
 
             <button
@@ -174,7 +174,7 @@ Live Demo: ${projects[2]?.liveDemoUrl}
 
             <div className="space-y-2.5">
               {educationTimeline.map((edu) => (
-                <div key={edu.degree} className="bg-white/[0.03] p-4 rounded-2xl border border-white/10">
+                <div key={edu.id || edu.degree} className="bg-white/[0.03] p-4 rounded-2xl border border-white/10">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
                     <span className="font-heading text-sm sm:text-base font-semibold text-[#F5F5F5]">
                       {edu.degree}
@@ -199,7 +199,7 @@ Live Demo: ${projects[2]?.liveDemoUrl}
             </h3>
 
             {experience.map((exp) => (
-              <div key={exp.organization} className="bg-white/[0.03] p-4 rounded-2xl border border-white/10">
+              <div key={exp.id || exp.organization} className="bg-white/[0.03] p-4 rounded-2xl border border-white/10 mb-2">
                 <div className="flex items-center justify-between gap-2 mb-1">
                   <span className="font-heading text-sm font-bold text-[#F5F5F5]">
                     {exp.role} — <span className="text-[#FF852C]">{exp.organization}</span>
@@ -255,15 +255,17 @@ Live Demo: ${projects[2]?.liveDemoUrl}
                   <p className="text-xs text-[#A5A5A5] leading-relaxed mb-2">
                     {proj.description}
                   </p>
-                  <a
-                    href={proj.liveDemoUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-[#FF6B00] hover:underline inline-flex items-center gap-1 font-mono text-[11px]"
-                  >
-                    <span>Live Product: {proj.liveDemoUrl}</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
+                  {proj.liveDemoUrl && (
+                    <a
+                      href={proj.liveDemoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[#FF6B00] hover:underline inline-flex items-center gap-1 font-mono text-[11px]"
+                    >
+                      <span>Live Product: {proj.liveDemoUrl}</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  )}
                 </div>
               ))}
             </div>

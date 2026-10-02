@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, FileText, Zap, Search } from 'lucide-react';
-import { portfolioData } from '../data/portfolio';
+import { Menu, X, FileText, Zap, Search, ShieldCheck } from 'lucide-react';
+import { useCMS } from '../context/CMSContext';
 
 interface NavbarProps {
   onOpenResume: () => void;
@@ -15,6 +15,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   isLiteMode = false,
   onToggleLiteMode,
 }) => {
+  const { data } = useCMS();
+  const profileName = data.profile.name;
+
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -84,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </span>
           </div>
           <span className="font-heading text-xs sm:text-sm font-bold tracking-tight text-[#F5F5F5] group-hover:text-white transition-colors truncate">
-            {portfolioData.profile.name}
+            {profileName}
           </span>
         </a>
 
@@ -113,7 +116,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </ul>
 
-        {/* Right: Cmd+K, Performance Toggle & Resume */}
+        {/* Right: Cmd+K, Performance Toggle, Admin CMS & Resume */}
         <div className="hidden sm:flex items-center gap-2">
           {/* Cmd+K trigger */}
           <button
@@ -125,6 +128,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Search className="w-3 h-3 text-[#FF6B00]" />
             <span className="hidden md:inline">Ctrl K</span>
           </button>
+
+          {/* Admin CMS Trigger */}
+          <a
+            href="#admin"
+            title="Admin CMS Panel"
+            className="p-1.5 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] bg-white/[0.04] hover:bg-white/10 border border-white/10 transition-colors"
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-[#FF6B00]" />
+          </a>
 
           {/* Performance toggle */}
           {onToggleLiteMode && (
@@ -156,6 +168,14 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile Hamburger Menu */}
         <div className="flex lg:hidden items-center gap-2">
+          <a
+            href="#admin"
+            title="Admin CMS"
+            className="p-1.5 rounded-full text-[#FF6B00] bg-white/[0.06] border border-white/10"
+          >
+            <ShieldCheck className="w-3.5 h-3.5" />
+          </a>
+
           <button
             type="button"
             onClick={onOpenCmd}
@@ -211,6 +231,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </a>
               );
             })}
+
+            <a
+              href="#admin"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center justify-between px-4 py-2 rounded-2xl text-xs font-semibold text-[#FF6B00] bg-[#FF6B00]/10 border border-[#FF6B00]/30"
+            >
+              <span>Admin CMS Panel</span>
+              <ShieldCheck className="w-4 h-4" />
+            </a>
 
             <div className="pt-2 mt-1 border-t border-white/10">
               <button

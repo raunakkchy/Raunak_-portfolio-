@@ -1,9 +1,10 @@
 import React from 'react';
-import { portfolioData } from '../data/portfolio';
+import { useCMS } from '../context/CMSContext';
 import { CheckCircle2, Sparkles, BookOpen } from 'lucide-react';
 
 export const Skills: React.FC = () => {
-  const { skillCategories, currentlyLearning } = portfolioData;
+  const { data } = useCMS();
+  const { skillCategories, currentlyLearning } = data;
 
   return (
     <section
@@ -63,26 +64,28 @@ export const Skills: React.FC = () => {
         </div>
 
         {/* Currently Learning Section */}
-        <div className="liquid-glass rounded-3xl p-6 sm:p-8 border border-white/15 bg-white/[0.02]">
-          <div className="flex items-center gap-2.5 mb-4 text-[#FF6B00]">
-            <BookOpen className="w-5 h-5" />
-            <h3 className="font-heading text-lg font-bold text-[#F5F5F5]">
-              Currently Learning & Deepening
-            </h3>
-          </div>
+        {currentlyLearning && currentlyLearning.length > 0 && (
+          <div className="liquid-glass rounded-3xl p-6 sm:p-8 border border-white/15 bg-white/[0.02]">
+            <div className="flex items-center gap-2.5 mb-4 text-[#FF6B00]">
+              <BookOpen className="w-5 h-5" />
+              <h3 className="font-heading text-lg font-bold text-[#F5F5F5]">
+                Currently Learning & Deepening
+              </h3>
+            </div>
 
-          <div className="flex flex-wrap gap-2.5">
-            {currentlyLearning.map((tech) => (
-              <div
-                key={tech}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium text-[#F5F5F5] bg-white/[0.05] border border-white/10 hover:border-[#FF6B00]/40 transition-colors"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B00] animate-pulse" />
-                <span>{tech}</span>
-              </div>
-            ))}
+            <div className="flex flex-wrap gap-2.5">
+              {currentlyLearning.map((tech) => (
+                <div
+                  key={tech}
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium text-[#F5F5F5] bg-white/[0.05] border border-white/10 hover:border-[#FF6B00]/40 transition-colors"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B00] animate-pulse" />
+                  <span>{tech}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

@@ -1,9 +1,10 @@
 import React from 'react';
-import { portfolioData } from '../data/portfolio';
-import { GraduationCap, Calendar, School } from 'lucide-react';
+import { useCMS } from '../context/CMSContext';
+import { Calendar, School } from 'lucide-react';
 
 export const Education: React.FC = () => {
-  const { educationTimeline } = portfolioData;
+  const { data } = useCMS();
+  const educationTimeline = data.educationTimeline;
 
   return (
     <section
@@ -25,9 +26,9 @@ export const Education: React.FC = () => {
 
         {/* Vertical Timeline */}
         <div className="relative border-l-2 border-[#FF6B00]/30 ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-8">
-          {educationTimeline.map((item, idx) => (
+          {educationTimeline.map((item) => (
             <div
-              key={item.degree}
+              key={item.id || item.degree}
               className="stagger-child relative liquid-glass p-6 sm:p-7 rounded-3xl border border-white/10 hover:border-[#FF6B00]/40 transition-all duration-300"
             >
               {/* Timeline dot */}

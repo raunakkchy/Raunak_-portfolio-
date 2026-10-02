@@ -1,13 +1,14 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import { portfolioData } from '../data/portfolio';
+import { useCMS } from '../context/CMSContext';
 
 interface AboutProps {
   onOpenResume: () => void;
 }
 
 export const About: React.FC<AboutProps> = ({ onOpenResume }) => {
-  const { about } = portfolioData;
+  const { data } = useCMS();
+  const about = data.about;
 
   return (
     <div className="reveal reveal-left flex flex-col justify-between h-full">

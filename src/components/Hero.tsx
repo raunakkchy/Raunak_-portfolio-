@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
-import { ArrowRight, Mail } from 'lucide-react';
-import { portfolioData } from '../data/portfolio';
+import React, { useRef, useState } from 'react';
+import { ArrowRight, Mail, Sparkles } from 'lucide-react';
+import { useCMS } from '../context/CMSContext';
 import { useMouseParallax } from '../hooks/useMouseParallax';
+import { InteractiveProfileCard } from './InteractiveProfileCard';
 
 // Minimal vector icons for social media
 const GithubIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
@@ -27,7 +28,10 @@ const XIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
 );
 
 export const Hero: React.FC = () => {
-  const { profile } = portfolioData;
+  const { data } = useCMS();
+  const profile = data.profile;
+
+  const [isProfileCardOpen, setIsProfileCardOpen] = useState<boolean>(false);
   const sectionRef = useRef<HTMLElement>(null);
   const parallaxOffset = useMouseParallax(sectionRef);
 
@@ -105,48 +109,56 @@ export const Hero: React.FC = () => {
 
             {/* 6. Social Icons */}
             <div className="hero-enter-socials flex items-center gap-3 pt-1">
-              <a
-                href={profile.socials.github}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="GitHub Profile"
-                className="p-2.5 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
-              >
-                <GithubIcon className="w-4 h-4" />
-              </a>
+              {profile.socials.github && (
+                <a
+                  href={profile.socials.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="GitHub Profile"
+                  className="p-2.5 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
+                >
+                  <GithubIcon className="w-4 h-4" />
+                </a>
+              )}
 
-              <a
-                href={profile.socials.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn Profile"
-                className="p-2.5 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
-              >
-                <LinkedinIcon className="w-4 h-4" />
-              </a>
+              {profile.socials.linkedin && (
+                <a
+                  href={profile.socials.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn Profile"
+                  className="p-2.5 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
+                >
+                  <LinkedinIcon className="w-4 h-4" />
+                </a>
+              )}
 
-              <a
-                href={profile.socials.email}
-                aria-label="Send Email"
-                className="p-2.5 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
-              >
-                <Mail className="w-4 h-4" />
-              </a>
+              {profile.socials.email && (
+                <a
+                  href={`mailto:${profile.socials.email.replace('mailto:', '')}`}
+                  aria-label="Send Email"
+                  className="p-2.5 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
+                >
+                  <Mail className="w-4 h-4" />
+                </a>
+              )}
 
-              <a
-                href={profile.socials.x}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="X Profile"
-                className="p-2.5 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
-              >
-                <XIcon className="w-4 h-4" />
-              </a>
+              {profile.socials.x && (
+                <a
+                  href={profile.socials.x}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="X Profile"
+                  className="p-2.5 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
+                >
+                  <XIcon className="w-4 h-4" />
+                </a>
+              )}
             </div>
 
           </div>
 
-          {/* RIGHT SIDE: HERO VISUAL */}
+          {/* RIGHT SIDE: INTERACTIVE HERO VISUAL & PHOTO */}
           <div className="hero-enter-shape lg:col-span-5 flex justify-center items-center relative">
             
             {/* Ambient glow reacting subtly */}
@@ -171,17 +183,25 @@ export const Hero: React.FC = () => {
               className="liquid-float absolute -bottom-6 right-2 sm:-right-2 w-12 h-11 rounded-[60%_40%_52%_48%/50%_60%_40%_50%] water-droplet z-20 pointer-events-none"
             />
 
-            {/* Main Liquid Hero Container */}
+            {/* Main Interactive Liquid Hero Container */}
             <div
-              className="relative liquid-hero transition-transform duration-200 ease-out"
+              onClick={() => setIsProfileCardOpen(true)}
+              className="relative liquid-hero transition-transform duration-200 ease-out cursor-pointer group"
               style={{
                 transform: `translate(${parallaxOffset.x}px, ${parallaxOffset.y}px)`,
               }}
+              title="Click to explore profile details"
             >
               
+              {/* Interactive Visual Badge Hint */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-40 px-3 py-1 rounded-full bg-[#0D1013]/90 border border-[#FF6B00]/50 text-[#FF6B00] font-mono text-[10px] font-bold shadow-[0_0_15px_rgba(255,107,0,0.3)] flex items-center gap-1.5 transition-all group-hover:scale-105 group-hover:bg-[#FF6B00] group-hover:text-white">
+                <Sparkles className="w-3 h-3" />
+                <span>Click to explore</span>
+              </div>
+
               {/* Outer Organic Refraction Shell */}
               <div
-                className="w-[290px] sm:w-[340px] md:w-[380px] h-[380px] sm:h-[440px] md:h-[480px] droplet-shape-hero liquid-glass p-3 relative overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.85)] border border-white/20"
+                className="w-[290px] sm:w-[340px] md:w-[380px] h-[380px] sm:h-[440px] md:h-[480px] droplet-shape-hero liquid-glass p-3 relative overflow-hidden shadow-[0_24px_70px_rgba(0,0,0,0.85)] border border-white/20 group-hover:border-[#FF6B00]/60 transition-all duration-300"
                 style={{
                   boxShadow:
                     'inset 2px 2px 3px rgba(255, 255, 255, 0.35), inset -2px -2px 6px rgba(255, 107, 0, 0.25), 0 30px 80px rgba(0, 0, 0, 0.9)',
@@ -190,15 +210,15 @@ export const Hero: React.FC = () => {
                 {/* Inner Mask with Profile Photo */}
                 <div className="relative w-full h-full droplet-shape-hero overflow-hidden bg-gradient-to-b from-[#0D1013] to-[#050607]">
                   
-                  {/* Photo with explicit dimensions and high priority fetch for instant LCP */}
+                  {/* Photo with explicit dimensions and high priority fetch */}
                   <img
                     src={profile.photoUrl}
-                    alt="Raunak Kumar - Full-Stack Developer"
+                    alt={`${profile.name} - Interactive Profile`}
                     width={380}
                     height={480}
                     fetchPriority="high"
                     decoding="sync"
-                    className="w-full h-full object-cover object-center filter contrast-[1.08] brightness-[0.92] select-none"
+                    className="w-full h-full object-cover object-center filter contrast-[1.08] brightness-[0.92] select-none group-hover:scale-105 transition-transform duration-500"
                   />
 
                   {/* Dark liquid-glass vignette */}
@@ -241,6 +261,12 @@ export const Hero: React.FC = () => {
 
         </div>
       </div>
+
+      {/* Interactive Profile Card Modal */}
+      <InteractiveProfileCard
+        isOpen={isProfileCardOpen}
+        onClose={() => setIsProfileCardOpen(false)}
+      />
     </section>
   );
 };

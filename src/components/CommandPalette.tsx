@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, X, Folder, User, Cpu, GraduationCap, Award, Mail, FileText, ArrowRight, Compass, Wrench } from 'lucide-react';
+import { useScrollLock } from '../hooks/useScrollLock';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -9,6 +10,8 @@ interface CommandPaletteProps {
 
 export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose, onOpenResume }) => {
   const [query, setQuery] = useState('');
+
+  useScrollLock(isOpen);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

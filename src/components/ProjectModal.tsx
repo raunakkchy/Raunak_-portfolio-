@@ -7,6 +7,7 @@ import {
   UserCheck,
 } from 'lucide-react';
 import { ProjectItem } from '../data/portfolio';
+import { useScrollLock } from '../hooks/useScrollLock';
 
 interface ProjectModalProps {
   project: ProjectItem | null;
@@ -14,16 +15,16 @@ interface ProjectModalProps {
 }
 
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
+  useScrollLock(!!project);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     if (project) {
-      document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => {
-      document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [project, onClose]);

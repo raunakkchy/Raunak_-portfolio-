@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { portfolioData, CertificationItem } from '../data/portfolio';
-import { Award, CheckCircle2, X, ExternalLink, ShieldCheck } from 'lucide-react';
+import { useCMS } from '../context/CMSContext';
+import { CertificationItem } from '../types/cms';
+import { Award, X, ExternalLink, ShieldCheck } from 'lucide-react';
+import { useScrollLock } from '../hooks/useScrollLock';
 
 export const Certifications: React.FC = () => {
-  const { certifications } = portfolioData;
+  const { data } = useCMS();
+  const certifications = data.certifications.filter((c) => c.published !== false);
   const [selectedCert, setSelectedCert] = useState<CertificationItem | null>(null);
+
+  useScrollLock(!!selectedCert);
 
   return (
     <section
@@ -123,6 +128,18 @@ export const Certifications: React.FC = () => {
                 <span className="text-[#FF6B00] font-bold">Details: </span>
                 {selectedCert.scoreCredits}
               </div>
+            )}
+
+            {selectedCert.credentialUrl && (
+              <a
+                href={selectedCert.credentialUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#FF6B00] hover:underline mb-4"
+              >
+                <span>Verify Credential Online</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
             )}
 
             <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
