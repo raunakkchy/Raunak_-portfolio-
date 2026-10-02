@@ -34,7 +34,10 @@ export const Certifications: React.FC = () => {
           {certifications.map((cert) => (
             <div
               key={cert.id}
-              onClick={() => setSelectedCert(cert)}
+              onClick={(e) => {
+                e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                setSelectedCert(cert);
+              }}
               className="stagger-child liquid-glass droplet-shape-card-1 p-6 flex flex-col justify-between cursor-pointer border border-white/10 hover:border-[#FF6B00]/40 transition-all duration-300 group relative overflow-hidden"
             >
               {/* Glass Reflection */}

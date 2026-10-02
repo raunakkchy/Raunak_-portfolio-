@@ -36,7 +36,8 @@ export const Experience: React.FC = () => {
             {experience.map((exp) => (
               <div
                 key={exp.id || exp.organization}
-                className="liquid-glass droplet-shape-card-1 p-6 sm:p-8 border border-white/15 h-full flex flex-col justify-between mb-4 last:mb-0"
+                onClick={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })}
+                className="liquid-glass droplet-shape-card-1 p-6 sm:p-8 border border-white/15 h-full flex flex-col justify-between mb-4 last:mb-0 cursor-pointer hover:border-[#FF6B00]/40 transition-all"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
@@ -76,7 +77,10 @@ export const Experience: React.FC = () => {
                 <span>Factual Achievements</span>
               </h3>
 
-              <div className="liquid-glass droplet-shape-card-2 p-6 sm:p-8 border border-white/15 h-full flex flex-col justify-between">
+              <div
+                onClick={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })}
+                className="liquid-glass droplet-shape-card-2 p-6 sm:p-8 border border-white/15 h-full flex flex-col justify-between cursor-pointer hover:border-[#FF6B00]/40 transition-all"
+              >
                 <div className="space-y-4">
                   {achievements.map((ach) => (
                     <div

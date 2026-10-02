@@ -15,6 +15,7 @@ import { CustomCursor } from '../components/CustomCursor';
 import { AnimatedSection } from '../components/AnimatedSection';
 import { Preloader } from '../components/Preloader';
 import { Scene3D } from '../components/Scene3D';
+import { HireModal } from '../components/HireModal';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { usePerformanceMode } from '../hooks/usePerformanceMode';
 import gsap from 'gsap';
@@ -33,11 +34,18 @@ const CommandPalette = lazy(() =>
 export const PublicPortfolio: React.FC = () => {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState<boolean>(false);
   const [isCmdOpen, setIsCmdOpen] = useState<boolean>(false);
+  const [isHireModalOpen, setIsHireModalOpen] = useState<boolean>(false);
+  const [hireService, setHireService] = useState<'web' | 'video' | 'general'>('general');
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const { isLiteMode, toggleLiteMode } = usePerformanceMode();
 
   // Initialize IntersectionObserver scroll reveals
   useScrollReveal();
+
+  const handleOpenHire = (service: 'web' | 'video' | 'general' = 'general') => {
+    setHireService(service);
+    setIsHireModalOpen(true);
+  };
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -97,6 +105,7 @@ export const PublicPortfolio: React.FC = () => {
       <Navbar
         onOpenResume={() => setIsResumeModalOpen(true)}
         onOpenCmd={() => setIsCmdOpen(true)}
+        onOpenHire={() => handleOpenHire('general')}
         isLiteMode={isLiteMode}
         onToggleLiteMode={toggleLiteMode}
       />
@@ -132,12 +141,19 @@ export const PublicPortfolio: React.FC = () => {
         {/* Technical Growth Journey */}
         <TechnicalJourney />
 
-        {/* Contact Section */}
-        <Contact />
+        {/* Contact Section: 🚀 Have a Project in Mind? (Web Dev & Video Editing) */}
+        <Contact onOpenHire={handleOpenHire} />
       </main>
 
       {/* Minimal Footer */}
       <Footer />
+
+      {/* Interactive Hire Me / Project Inquiry Modal */}
+      <HireModal
+        isOpen={isHireModalOpen}
+        onClose={() => setIsHireModalOpen(false)}
+        defaultService={hireService}
+      />
 
       {/* Lazy-loaded Print/PDF-ready Resume Modal */}
       {isResumeModalOpen && (
@@ -156,6 +172,7 @@ export const PublicPortfolio: React.FC = () => {
             isOpen={isCmdOpen}
             onClose={() => setIsCmdOpen(false)}
             onOpenResume={() => setIsResumeModalOpen(true)}
+            onOpenHire={handleOpenHire}
           />
         </Suspense>
       )}

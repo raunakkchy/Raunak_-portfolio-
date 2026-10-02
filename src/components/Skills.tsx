@@ -29,7 +29,8 @@ export const Skills: React.FC = () => {
           {skillCategories.map((category) => (
             <div
               key={category.title}
-              className="stagger-child liquid-glass droplet-shape-card-1 p-6 flex flex-col justify-between border border-white/10 hover:border-[#FF6B00]/30 transition-all duration-300"
+              onClick={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })}
+              className="stagger-child liquid-glass droplet-shape-card-1 p-6 flex flex-col justify-between border border-white/10 hover:border-[#FF6B00]/40 transition-all duration-300 cursor-pointer hover:-translate-y-1"
             >
               <div>
                 <h3 className="font-heading text-lg font-bold text-[#F5F5F5] mb-4 flex items-center justify-between pb-2 border-b border-white/10">

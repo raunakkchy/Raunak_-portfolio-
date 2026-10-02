@@ -150,6 +150,15 @@ export const portfolioData = {
         { name: "Gemini API", tag: "Used in Projects" },
       ],
     },
+    {
+      title: "Video Editing & Content",
+      items: [
+        { name: "Premiere Pro / CapCut", tag: "Video Editing" },
+        { name: "Shorts & Reels Creation", tag: "Social Media" },
+        { name: "Motion Storytelling", tag: "Creative Content" },
+        { name: "Audio & Color Sync", tag: "Post Production" },
+      ],
+    },
   ] as SkillCategory[],
 
   experience: [
@@ -286,24 +295,26 @@ export const portfolioData = {
     {
       id: "college-complaint-portal",
       number: "02",
-      title: "College Complaint Portal",
-      subtitle: "Online Complaint Management System",
+      title: "Complaint Portal",
+      subtitle: "Online College Complaint Management System",
       category: "Full Stack Portal",
       description:
         "A full-stack web application for submitting, managing, and tracking college complaints digitally for students and administrators.",
       technologies: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
       liveDemoUrl: "https://github.com/raunakkchy",
       githubUrl: "https://github.com/raunakkchy",
-      shapeClass: "droplet-shape-card-2",
+      shapeClass: "droplet-shape-card-1",
       whatItDoes:
-        "Digital complaint submission and tracking system for students with real-time status updates, admin resolution portal, category tags, and photo attachment previews.",
+        "Digital complaint submission and tracking system for students with real-time status updates, admin resolution workflow, role-based access control, and dedicated resolution dashboards.",
       mainFeatures: [
-        "Student Complaint Submission",
-        "Category & Priority Tagging",
-        "Photo Upload & Attachment Preview",
-        "Admin Portal & Resolution Workflow",
-        "Real-Time Status Tracking",
-        "Responsive Student Dashboard",
+        "Student Registration & Login",
+        "Online Complaint Submission",
+        "Complaint Status Tracking",
+        "Admin Complaint Management",
+        "Complaint Status Updates",
+        "Role-Based Access Control",
+        "Complaint Dashboard",
+        "Secure Authentication",
       ],
       problem: "Paper-based complaint forms in college campuses lead to delayed resolutions, misplaced complaints, and lack of tracking transparency.",
       approach: "Built a digitized complaint lifecycle from student submission through admin review and resolution status updating.",

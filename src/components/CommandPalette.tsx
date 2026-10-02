@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Search, X, Folder, User, Cpu, GraduationCap, Award, Mail, FileText, ArrowRight, Compass, Wrench } from 'lucide-react';
+import { Search, X, Folder, User, Cpu, GraduationCap, Award, Mail, FileText, ArrowRight, Compass, Wrench, Sparkles, Briefcase } from 'lucide-react';
 import { useScrollLock } from '../hooks/useScrollLock';
 
 interface CommandPaletteProps {
   isOpen: boolean;
   onClose: () => void;
   onOpenResume: () => void;
+  onOpenHire?: (service?: 'web' | 'video' | 'general') => void;
 }
 
-export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose, onOpenResume }) => {
+export const CommandPalette: React.FC<CommandPaletteProps> = ({
+  isOpen,
+  onClose,
+  onOpenResume,
+  onOpenHire,
+}) => {
   const [query, setQuery] = useState('');
 
   useScrollLock(isOpen);
@@ -33,6 +39,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
 
   const items = [
     { name: 'Home', section: 'home', icon: Compass, cat: 'Navigation' },
+    { name: '👉 Hire Me / Start a Project', action: 'hire', icon: Sparkles, cat: 'Opportunities' },
     { name: 'View Projects', section: 'projects', icon: Folder, cat: 'Projects' },
     { name: 'About Me', section: 'about', icon: User, cat: 'Profile' },
     { name: 'How I Build', section: 'how-i-build', icon: Wrench, cat: 'Philosophy' },
@@ -41,7 +48,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
     { name: 'Education Timeline', section: 'education', icon: GraduationCap, cat: 'Academics' },
     { name: 'Certifications', section: 'certifications', icon: Award, cat: 'Credentials' },
     { name: 'Technical Journey', section: 'journey', icon: Compass, cat: 'Timeline' },
-    { name: 'Contact Me', section: 'contact', icon: Mail, cat: 'Connect' },
+    { name: '📩 Contact Me', section: 'contact', icon: Mail, cat: 'Connect' },
     { name: 'View / Download Resume', section: 'resume-action', action: 'resume', icon: FileText, cat: 'CV' },
   ];
 
@@ -54,6 +61,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
     onClose();
     if (item.action === 'resume') {
       onOpenResume();
+      return;
+    }
+    if (item.action === 'hire') {
+      if (onOpenHire) onOpenHire('general');
       return;
     }
     if (item.section) {

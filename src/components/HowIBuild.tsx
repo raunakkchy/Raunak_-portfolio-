@@ -41,7 +41,8 @@ export const HowIBuild: React.FC = () => {
           {howIBuild.map((item, idx) => (
             <div
               key={item.step}
-              className="stagger-child liquid-glass droplet-shape-card-1 p-6 sm:p-7 flex flex-col justify-between relative group border border-white/10 hover:border-[#FF6B00]/40 transition-all duration-300"
+              onClick={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })}
+              className="stagger-child liquid-glass droplet-shape-card-1 p-6 sm:p-7 flex flex-col justify-between relative group border border-white/10 hover:border-[#FF6B00]/40 transition-all duration-300 cursor-pointer hover:-translate-y-1"
             >
               {/* Glass reflection */}
               <div

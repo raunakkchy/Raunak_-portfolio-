@@ -75,7 +75,10 @@ export const Projects: React.FC = () => {
                   setHoverPos({ x: 0, y: 0 });
                 }}
                 onMouseMove={handleCardMouseMove}
-                onClick={() => setSelectedProject(project)}
+                onClick={(e) => {
+                  e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                  setSelectedProject(project);
+                }}
                 className={`project-card liquid-glass ${project.shapeClass || 'droplet-shape-card-1'} p-7 sm:p-9 flex flex-col justify-between cursor-pointer relative overflow-hidden transition-all duration-300 border ${
                   isHovered ? 'border-[#FF6B00]/60 shadow-[0_20px_60px_rgba(255,107,0,0.25)] -translate-y-2' : 'border-white/10'
                 }`}
@@ -172,7 +175,7 @@ export const Projects: React.FC = () => {
                 {/* EMERGING HOVER DETAIL PANEL (Desktop) */}
                 {isHovered && (
                   <div
-                    className="hidden lg:block absolute inset-0 z-30 p-7 bg-[#0D1013]/95 backdrop-blur-md rounded-3xl border border-[#FF6B00]/50 shadow-2xl animate-in fade-in zoom-in-95 duration-200 overflow-y-auto flex flex-col justify-between"
+                    className="hidden lg:flex flex-col justify-between absolute inset-0 z-30 p-7 bg-[#0D1013]/95 backdrop-blur-md rounded-3xl border border-[#FF6B00]/50 shadow-2xl animate-in fade-in zoom-in-95 duration-200 overflow-y-auto overscroll-contain"
                   >
                     <div>
                       <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-3">

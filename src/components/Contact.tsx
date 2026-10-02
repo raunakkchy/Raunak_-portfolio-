@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
-import { Mail, ArrowRight, Copy, Check } from 'lucide-react';
-import { portfolioData } from '../data/portfolio';
+import { Mail, ArrowRight, Copy, Check, Sparkles, Code2, Film, Briefcase, Phone, MessageSquare } from 'lucide-react';
+import { useCMS } from '../context/CMSContext';
+
+interface ContactProps {
+  onOpenHire?: (service?: 'web' | 'video' | 'general') => void;
+}
 
 const GithubIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -18,9 +22,11 @@ const LinkedinIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
   </svg>
 );
 
-export const Contact: React.FC = () => {
+export const Contact: React.FC<ContactProps> = ({ onOpenHire }) => {
+  const { data } = useCMS();
+  const profile = data.profile;
   const [copied, setCopied] = useState<boolean>(false);
-  const email = portfolioData.profile.email;
+  const email = profile.email;
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -28,113 +34,236 @@ export const Contact: React.FC = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleOpenHire = (service?: 'web' | 'video' | 'general') => {
+    if (onOpenHire) {
+      onOpenHire(service);
+    } else {
+      window.location.href = `mailto:${email}?subject=Project%20Inquiry%20from%20Portfolio`;
+    }
+  };
+
   return (
     <section
       id="contact"
-      aria-label="Contact Section"
+      aria-label="Contact and Collaboration Section"
       className="reveal reveal-up relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 z-10"
     >
       <div className="w-full max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        
+        {/* Main Pitch Card Container */}
+        <div className="liquid-glass rounded-3xl p-6 sm:p-10 md:p-12 border border-white/20 shadow-2xl relative overflow-hidden">
           
-          {/* Left Side: Get In Touch text & button */}
-          <div className="lg:col-span-6 flex flex-col justify-center">
-            {/* Orange line accent */}
-            <div className="w-8 h-[2.5px] bg-[#FF6B00] rounded-full mb-3 shadow-[0_0_10px_rgba(255,107,0,0.5)]" />
+          {/* Subtle background ambient lights */}
+          <div
+            aria-hidden="true"
+            className="absolute top-0 right-1/4 w-80 h-80 rounded-full bg-[#FF6B00]/10 blur-[100px] pointer-events-none"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute -bottom-10 left-10 w-72 h-72 rounded-full bg-cyan-500/10 blur-[90px] pointer-events-none"
+          />
 
-            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F5F5F5] mb-4">
-              Get In Touch
-            </h2>
+          {/* Top Headline Pill */}
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono font-bold text-[#FF6B00] bg-[#FF6B00]/10 border border-[#FF6B00]/30 shadow-[0_0_15px_rgba(255,107,0,0.15)]">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>🚀 Have a Project in Mind?</span>
+            </div>
 
-            <p className="font-body text-[#A5A5A5] text-sm sm:text-base leading-relaxed mb-8 max-w-md">
-              Have a project in mind or just want to say hi? Feel free to reach out.
-            </p>
-
-            <div>
-              <a
-                href={`mailto:${email}`}
-                className="anim-primary-button inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-xs sm:text-sm text-[#F5F5F5] liquid-glass hover:border-[#FF6B00]/40 transition-all duration-300"
-              >
-                <span>Contact Me</span>
-                <ArrowRight className="w-4 h-4 text-[#FF6B00] group-hover:translate-x-1 transition-transform" />
-              </a>
+            <div className="flex items-center gap-2 text-xs font-mono text-[#A5A5A5]">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Available for Internships, Freelance & Full-time</span>
             </div>
           </div>
 
-          {/* Right Side: Horizontal Liquid Water-Drop Shape Container */}
-          <div className="lg:col-span-6 flex justify-center items-center">
-            <div
-              className="liquid-droplet w-full max-w-md droplet-shape-horizontal liquid-glass p-8 sm:p-10 flex flex-col items-center justify-center text-center shadow-[0_25px_80px_rgba(0,0,0,0.85)] border border-white/20 relative overflow-hidden select-none group"
-              style={{
-                boxShadow:
-                  'inset 2px 2px 3px rgba(255, 255, 255, 0.3), inset -2px -2px 6px rgba(255, 107, 0, 0.2), 0 30px 90px rgba(0, 0, 0, 0.9)',
-              }}
-            >
-              {/* Top specular highlight */}
-              <div
-                aria-hidden="true"
-                className="liquid-reflection absolute top-2 left-10 w-32 h-8 rounded-full bg-white/10 blur-md pointer-events-none"
-              />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            {/* Left Content Area */}
+            <div className="lg:col-span-7 space-y-5">
+              <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F5F5F5] leading-tight">
+                Turn your ideas into something <span className="text-[#FF852C]">impactful</span>.
+              </h2>
 
-              {/* Bottom orange glow */}
-              <div
-                aria-hidden="true"
-                className="ambient-glow absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-[#FF6B00]/20 blur-2xl pointer-events-none"
-              />
+              <p className="font-body text-[#A5A5A5] text-sm sm:text-base leading-relaxed max-w-xl">
+                Whether you need a modern website or engaging video content, I’m ready to craft digital solutions that stand out.
+              </p>
 
-              {/* Mail Icon + Email display */}
-              <div className="flex flex-col items-center gap-2 mb-6 z-10">
-                <div className="w-10 h-10 rounded-full bg-[#FF6B00]/15 flex items-center justify-center text-[#FF6B00] border border-[#FF6B00]/30 shadow-[0_0_15px_rgba(255,107,0,0.2)]">
-                  <Mail className="w-5 h-5" />
+              {/* Service Capabilities Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                
+                {/* 1. Web Development */}
+                <div
+                  onClick={() => handleOpenHire('web')}
+                  className="p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 hover:border-[#FF6B00]/40 transition-all cursor-pointer group"
+                >
+                  <div className="flex items-center gap-2.5 text-[#FF6B00] mb-2 font-mono font-bold text-xs uppercase tracking-wider">
+                    <Code2 className="w-4 h-4" />
+                    <span>💻 Web Development</span>
+                  </div>
+                  <p className="text-xs text-[#A5A5A5] leading-relaxed">
+                    Websites, web apps & full-stack software products built with React, Node.js & modern UI frameworks.
+                  </p>
                 </div>
 
-                <div className="flex items-center gap-2 mt-1">
-                  <a
-                    href={`mailto:${email}`}
-                    className="font-mono text-sm sm:text-base font-medium text-[#F5F5F5] hover:text-[#FF6B00] transition-colors"
-                  >
-                    {email}
-                  </a>
-
-                  <button
-                    type="button"
-                    onClick={handleCopyEmail}
-                    className="p-1.5 rounded-full liquid-pill text-[#A5A5A5] hover:text-white transition-colors"
-                    title="Copy Email"
-                    aria-label="Copy email address"
-                  >
-                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                  </button>
+                {/* 2. Video Editing */}
+                <div
+                  onClick={() => handleOpenHire('video')}
+                  className="p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 hover:border-cyan-500/40 transition-all cursor-pointer group"
+                >
+                  <div className="flex items-center gap-2.5 text-cyan-400 mb-2 font-mono font-bold text-xs uppercase tracking-wider">
+                    <Film className="w-4 h-4" />
+                    <span>🎬 Video Editing</span>
+                  </div>
+                  <p className="text-xs text-[#A5A5A5] leading-relaxed">
+                    Reels, YouTube Shorts, social media storytelling & high-retention creative motion content.
+                  </p>
                 </div>
+
               </div>
 
-              {/* Minimal LinkedIn & GitHub Icons at bottom of capsule */}
-              <div className="flex items-center justify-center gap-4 pt-4 border-t border-white/10 w-full max-w-[220px] z-10">
-                <a
-                  href={portfolioData.profile.socials.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn Profile"
-                  className="p-2 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
+              {/* Status Note */}
+              <div className="pt-2 text-xs font-mono text-[#8A8E94]">
+                <span>I’m open to </span>
+                <span className="text-white font-semibold">internships</span>,{' '}
+                <span className="text-white font-semibold">freelance projects</span>, and{' '}
+                <span className="text-white font-semibold">job opportunities</span>.
+              </div>
+
+              {/* Action Buttons: 👉 Hire Me · 📩 Contact Me */}
+              <div className="flex flex-wrap items-center gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => handleOpenHire('general')}
+                  className="anim-primary-button inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-white bg-[#FF6B00] hover:bg-[#FF852C] shadow-[0_10px_25px_rgba(255,107,0,0.35)] transition-all"
                 >
-                  <LinkedinIcon className="w-4 h-4" />
-                </a>
+                  <span>👉 Hire Me</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
 
                 <a
-                  href={portfolioData.profile.socials.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="GitHub Profile"
-                  className="p-2 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
+                  href={`mailto:${email}?subject=Let's%20Connect%20-%20Project%20Opportunity`}
+                  className="anim-primary-button inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-xs sm:text-sm text-[#F5F5F5] liquid-glass hover:border-[#FF6B00]/40 transition-all"
                 >
-                  <GithubIcon className="w-4 h-4" />
+                  <Mail className="w-4 h-4 text-[#FF6B00]" />
+                  <span>📩 Contact Me</span>
                 </a>
+
+                {profile.phone && (
+                  <a
+                    href={`tel:${profile.phone}`}
+                    className="p-3 rounded-full text-[#A5A5A5] hover:text-white liquid-pill transition-colors"
+                    title={`Call: ${profile.phone}`}
+                    aria-label="Call phone"
+                  >
+                    <Phone className="w-4 h-4" />
+                  </a>
+                )}
               </div>
 
             </div>
+
+            {/* Right Side: Glassmorphic Capsule & Quick Connect */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div
+                className="w-full max-w-sm rounded-3xl p-6 sm:p-7 bg-[#070a0f]/80 backdrop-blur-xl border border-white/15 shadow-xl relative overflow-hidden"
+              >
+                {/* Specular highlight */}
+                <div
+                  aria-hidden="true"
+                  className="absolute top-2 left-6 w-24 h-6 rounded-full bg-white/10 blur-md pointer-events-none"
+                />
+
+                <div className="flex flex-col items-center text-center space-y-4">
+                  {/* Photo or Icon */}
+                  <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-[#FF6B00]/50 shadow-[0_0_20px_rgba(255,107,0,0.3)]">
+                    <img
+                      src={profile.photoUrl}
+                      alt={profile.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <div>
+                    <h3 className="font-heading text-lg font-bold text-white">
+                      {profile.name}
+                    </h3>
+                    <p className="font-mono text-xs text-[#FF852C]">
+                      Full-Stack Dev & Content Creator
+                    </p>
+                    <p className="font-body text-xs text-[#A5A5A5] mt-1">
+                      {profile.location}
+                    </p>
+                  </div>
+
+                  {/* Email row */}
+                  <div className="w-full p-2.5 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 overflow-hidden text-left">
+                      <Mail className="w-4 h-4 text-[#FF6B00] shrink-0" />
+                      <span className="font-mono text-xs text-[#F5F5F5] truncate">
+                        {email}
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleCopyEmail}
+                      className="p-1.5 rounded-xl bg-white/[0.06] hover:bg-white/15 text-[#A5A5A5] hover:text-white transition-colors shrink-0"
+                      title="Copy Email"
+                      aria-label="Copy email address"
+                    >
+                      {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
+
+                  {/* Social Buttons */}
+                  <div className="flex items-center justify-center gap-3 pt-2 w-full border-t border-white/10">
+                    {profile.socials.linkedin && (
+                      <a
+                        href={profile.socials.linkedin}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="LinkedIn Profile"
+                        className="p-2 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
+                      >
+                        <LinkedinIcon className="w-4 h-4" />
+                      </a>
+                    )}
+
+                    {profile.socials.github && (
+                      <a
+                        href={profile.socials.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="GitHub Profile"
+                        className="p-2 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] liquid-pill"
+                      >
+                        <GithubIcon className="w-4 h-4" />
+                      </a>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => handleOpenHire('general')}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-mono text-[#FF852C] bg-[#FF6B00]/10 hover:bg-[#FF6B00]/20 border border-[#FF6B00]/30 transition-colors"
+                    >
+                      <MessageSquare className="w-3 h-3" />
+                      <span>Quick Pitch</span>
+                    </button>
+                  </div>
+
+                  {/* Motivational Motto */}
+                  <div className="text-[11px] font-mono text-[#6F7378] italic">
+                    “Let’s build. Let’s create. Let’s make something that stands out.”
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
           </div>
 
         </div>
+
       </div>
     </section>
   );

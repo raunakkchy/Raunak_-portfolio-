@@ -29,7 +29,8 @@ export const Education: React.FC = () => {
           {educationTimeline.map((item) => (
             <div
               key={item.id || item.degree}
-              className="stagger-child relative liquid-glass p-6 sm:p-7 rounded-3xl border border-white/10 hover:border-[#FF6B00]/40 transition-all duration-300"
+              onClick={(e) => e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })}
+              className="stagger-child relative liquid-glass p-6 sm:p-7 rounded-3xl border border-white/10 hover:border-[#FF6B00]/40 transition-all duration-300 cursor-pointer hover:-translate-y-1"
             >
               {/* Timeline dot */}
               <div className="absolute -left-[31px] sm:-left-[47px] top-7 w-5 h-5 rounded-full bg-[#050607] border-2 border-[#FF6B00] flex items-center justify-center shadow-[0_0_10px_rgba(255,107,0,0.5)]">

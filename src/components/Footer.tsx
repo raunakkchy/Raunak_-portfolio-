@@ -27,6 +27,13 @@ export const Footer: React.FC = () => {
         {/* Center: © 2025 Raunak. Built with passion. */}
         <div>
           © 2025 Raunak. Built with passion.
+          <a
+            href="/admin"
+            className="opacity-0 hover:opacity-40 transition-opacity ml-1 text-[10px]"
+            title="Admin Login"
+          >
+            •
+          </a>
         </div>
 
         {/* Right: Back to top arrow */}

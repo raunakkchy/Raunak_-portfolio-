@@ -5,7 +5,7 @@ export function lockScroll(): void {
 
   if (lockCount === 0) {
     document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
   }
   lockCount++;
 }
@@ -16,7 +16,9 @@ export function unlockScroll(): void {
   lockCount = Math.max(0, lockCount - 1);
   if (lockCount === 0) {
     document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('touch-action');
     document.documentElement.style.removeProperty('overflow');
+    document.documentElement.style.removeProperty('touch-action');
   }
 }
 
@@ -25,5 +27,7 @@ export function forceUnlockScroll(): void {
 
   lockCount = 0;
   document.body.style.removeProperty('overflow');
+  document.body.style.removeProperty('touch-action');
   document.documentElement.style.removeProperty('overflow');
+  document.documentElement.style.removeProperty('touch-action');
 }

@@ -1,7 +1,7 @@
 import { CMSData, ProjectItem, SkillItem, ExperienceItem, EducationItem, CertificationItem, AchievementItem, ProfileData, AboutData } from '../types/cms';
 import { portfolioData as initialPortfolioData } from '../data/portfolio';
 
-const STORAGE_KEY = 'raunak_portfolio_cms_v1';
+const STORAGE_KEY = 'raunak_portfolio_cms_v2';
 const AUTH_TOKEN_KEY = 'raunak_cms_auth_token';
 
 // Convert initial portfolioData to CMSData structure

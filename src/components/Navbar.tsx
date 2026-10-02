@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, FileText, Zap, Search, ShieldCheck } from 'lucide-react';
+import { Menu, X, FileText, Zap, Search, Sparkles } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 
 interface NavbarProps {
   onOpenResume: () => void;
   onOpenCmd: () => void;
+  onOpenHire?: () => void;
   isLiteMode?: boolean;
   onToggleLiteMode?: () => void;
 }
@@ -12,6 +13,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({
   onOpenResume,
   onOpenCmd,
+  onOpenHire,
   isLiteMode = false,
   onToggleLiteMode,
 }) => {
@@ -69,30 +71,32 @@ export const Navbar: React.FC<NavbarProps> = ({
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 py-3 sm:py-4 pointer-events-none">
       <nav
         aria-label="Main Navigation"
-        className={`anim-nav pointer-events-auto w-full max-w-5xl transition-all duration-300 rounded-full px-4 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between liquid-glass ${
+        className={`anim-nav pointer-events-auto transition-all duration-300 ease-out flex items-center justify-between gap-3 sm:gap-6 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full border ${
           isScrolled
-            ? 'shadow-[0_20px_50px_rgba(0,0,0,0.85)] border-white/20 bg-[#0D1013]/90 backdrop-blur-md'
-            : 'bg-[#080A0C]/75 border-white/10'
-        }`}
+            ? 'liquid-glass shadow-[0_15px_35px_rgba(0,0,0,0.85)] border-white/20'
+            : 'bg-[#0D1013]/60 backdrop-blur-xl border-white/10'
+        } max-w-5xl w-full mx-auto`}
       >
-        {/* Left: R logo + Raunak Kumar */}
+        {/* Left: Brand / Monogram */}
         <a
           href="#home"
           onClick={(e) => handleLinkClick(e, '#home')}
-          className="flex items-center gap-2 group focus-visible:outline-none rounded-full"
+          className="group flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF6B00] rounded-full"
         >
-          <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#FF6B00]/15 border border-[#FF6B00]/30 group-hover:border-[#FF6B00] shadow-[0_0_15px_rgba(255,107,0,0.2)] transition-all">
-            <span className="font-heading text-xs font-bold tracking-tight text-[#FF6B00]">
-              R
-            </span>
+          <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#FF6B00]/40 p-0.5 liquid-pill group-hover:border-[#FF6B00] transition-colors">
+            <img
+              src={data.profile.photoUrl}
+              alt={profileName}
+              className="w-full h-full rounded-full object-cover"
+            />
           </div>
-          <span className="font-heading text-xs sm:text-sm font-bold tracking-tight text-[#F5F5F5] group-hover:text-white transition-colors truncate">
+          <span className="font-heading font-bold text-sm tracking-tight text-[#F5F5F5] group-hover:text-white transition-colors">
             {profileName}
           </span>
         </a>
 
-        {/* Center: Desktop Links */}
-        <ul className="hidden lg:flex items-center gap-1 sm:gap-1.5">
+        {/* Center: Desktop Nav Links */}
+        <ul className="hidden lg:flex items-center gap-1 xl:gap-2">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.substring(1);
             return (
@@ -100,15 +104,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <a
                   href={link.href}
                   onClick={(e) => handleLinkClick(e, link.href)}
-                  className={`relative px-3 py-1 text-[11px] font-medium rounded-full transition-all duration-200 ${
+                  className={`relative px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
                     isActive
-                      ? 'text-[#FF6B00] bg-white/[0.08] border border-[#FF6B00]/40 shadow-[0_0_12px_rgba(255,107,0,0.15)] font-semibold'
-                      : 'text-[#A5A5A5] hover:text-[#F5F5F5] hover:bg-white/[0.04]'
+                      ? 'text-[#F5F5F5] font-semibold'
+                      : 'text-[#A5A5A5] hover:text-[#F5F5F5]'
                   }`}
                 >
                   {link.name}
                   {isActive && (
-                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#FF6B00]" />
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 rounded-full bg-white/[0.08] border border-white/10 -z-10 shadow-sm"
+                    />
                   )}
                 </a>
               </li>
@@ -116,8 +123,20 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </ul>
 
-        {/* Right: Cmd+K, Performance Toggle, Admin CMS & Resume */}
+        {/* Right: Hire Me, Cmd+K, Performance Toggle, Resume */}
         <div className="hidden sm:flex items-center gap-2">
+          {/* Hire Me CTA */}
+          {onOpenHire && (
+            <button
+              type="button"
+              onClick={onOpenHire}
+              className="anim-primary-button inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-bold text-white bg-[#FF6B00] hover:bg-[#FF852C] shadow-[0_0_15px_rgba(255,107,0,0.35)] transition-all"
+            >
+              <Sparkles className="w-3 h-3" />
+              <span>👉 Hire Me</span>
+            </button>
+          )}
+
           {/* Cmd+K trigger */}
           <button
             type="button"
@@ -128,15 +147,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Search className="w-3 h-3 text-[#FF6B00]" />
             <span className="hidden md:inline">Ctrl K</span>
           </button>
-
-          {/* Admin CMS Trigger */}
-          <a
-            href="#admin"
-            title="Admin CMS Panel"
-            className="p-1.5 rounded-full text-[#A5A5A5] hover:text-[#FF6B00] bg-white/[0.04] hover:bg-white/10 border border-white/10 transition-colors"
-          >
-            <ShieldCheck className="w-3.5 h-3.5 text-[#FF6B00]" />
-          </a>
 
           {/* Performance toggle */}
           {onToggleLiteMode && (
@@ -167,14 +177,16 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Mobile Hamburger Menu */}
-        <div className="flex lg:hidden items-center gap-2">
-          <a
-            href="#admin"
-            title="Admin CMS"
-            className="p-1.5 rounded-full text-[#FF6B00] bg-white/[0.06] border border-white/10"
-          >
-            <ShieldCheck className="w-3.5 h-3.5" />
-          </a>
+        <div className="flex lg:hidden items-center gap-1.5">
+          {onOpenHire && (
+            <button
+              type="button"
+              onClick={onOpenHire}
+              className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white bg-[#FF6B00] shadow-[0_0_10px_rgba(255,107,0,0.3)]"
+            >
+              Hire Me
+            </button>
+          )}
 
           <button
             type="button"
@@ -183,15 +195,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="p-1.5 rounded-full text-[#FF6B00] bg-white/[0.06] border border-white/10"
           >
             <Search className="w-3.5 h-3.5" />
-          </button>
-
-          <button
-            type="button"
-            onClick={onOpenResume}
-            aria-label="Resume"
-            className="sm:hidden p-1.5 rounded-full text-[#FF6B00] bg-white/[0.06] border border-white/10"
-          >
-            <FileText className="w-3.5 h-3.5" />
           </button>
 
           <button
@@ -232,14 +235,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               );
             })}
 
-            <a
-              href="#admin"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center justify-between px-4 py-2 rounded-2xl text-xs font-semibold text-[#FF6B00] bg-[#FF6B00]/10 border border-[#FF6B00]/30"
-            >
-              <span>Admin CMS Panel</span>
-              <ShieldCheck className="w-4 h-4" />
-            </a>
+            {onOpenHire && (
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onOpenHire();
+                }}
+                className="flex items-center justify-between px-4 py-2 rounded-2xl text-xs font-bold text-white bg-[#FF6B00] shadow-[0_0_12px_rgba(255,107,0,0.3)]"
+              >
+                <span>👉 Hire Me / Start a Project</span>
+                <Sparkles className="w-4 h-4" />
+              </button>
+            )}
 
             <div className="pt-2 mt-1 border-t border-white/10">
               <button
@@ -248,7 +256,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setIsMobileMenuOpen(false);
                   onOpenResume();
                 }}
-                className="anim-primary-button w-full flex items-center justify-center gap-2 px-4 py-2 rounded-2xl text-xs font-semibold text-white bg-[#FF6B00] hover:bg-[#FF852C] transition-colors"
+                className="anim-primary-button w-full flex items-center justify-center gap-2 px-4 py-2 rounded-2xl text-xs font-semibold text-white bg-white/[0.08] hover:bg-[#FF6B00] transition-colors"
               >
                 <FileText className="w-3.5 h-3.5" />
                 <span>Download Resume</span>

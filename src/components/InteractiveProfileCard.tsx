@@ -153,10 +153,10 @@ export const InteractiveProfileCard: React.FC<InteractiveProfileCardProps> = ({ 
         <div className="py-5 space-y-2">
           <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#FF6B00]">
             <BookOpen className="w-4 h-4" />
-            <span className="uppercase tracking-wider">Current Focus</span>
+            <span className="uppercase tracking-wider">Current Focus & Services</span>
           </div>
           <div className="text-xs text-[#A5A5A5] font-sans leading-relaxed">
-            Full-Stack Web Development · AI-Powered Applications · Real-World Software Engineering
+            Full-Stack Web Development · Video Editing & Content Creation · Open to Internships, Freelance & Jobs
           </div>
         </div>
 
